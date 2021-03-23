@@ -15,7 +15,9 @@
   (with-eval-after-load 'clojure-mode
     (with-eval-after-load 'cider
       (with-eval-after-load 'flycheck
-        (flycheck-clojure-setup)))))
+        (flycheck-clojure-setup)
+        (dolist (binding '("M-s"))
+          (define-key cider-mode-map (read-kbd-macro binding)nil))))))
 
 
 (provide 'init-clojure-cider)
