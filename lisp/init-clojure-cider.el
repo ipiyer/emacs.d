@@ -4,6 +4,13 @@
 
 (require 'init-clojure)
 
+(defun add-clj-format-before-save ()
+  (interactive)
+  (add-hook 'before-save-hook
+            'cider-format-buffer
+            t
+            t))
+
 (when (maybe-require-package 'cider)
   (setq nrepl-popup-stacktraces nil)
 
@@ -16,6 +23,7 @@
     (with-eval-after-load 'cider
       (with-eval-after-load 'flycheck
         (flycheck-clojure-setup)
+        (add-hook 'before-save-hook 'cider-format-buffer)
         (dolist (binding '("M-s"))
           (define-key cider-mode-map (read-kbd-macro binding)nil))))))
 
