@@ -4,6 +4,7 @@
 
 (require 'init-clojure)
 
+
 (defun add-clj-format-before-save ()
   (interactive)
   (add-hook 'before-save-hook
@@ -22,7 +23,6 @@
   (with-eval-after-load 'clojure-mode
     (with-eval-after-load 'cider
       (with-eval-after-load 'flycheck
-        (flycheck-clojure-setup)
         (add-hook 'before-save-hook 'cider-format-buffer)
         (dolist (binding '("M-s"))
           (define-key cider-mode-map (read-kbd-macro binding)nil))))))

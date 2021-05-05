@@ -139,6 +139,8 @@
 (require-package 'gnuplot)
 (require-package 'lua-mode)
 (require-package 'htmlize)
+(require 'flycheck-joker)
+(require 'flycheck-clj-kondo)
 (when *is-a-mac*
   (require-package 'osx-location))
 (unless (eq system-type 'windows-nt)
