@@ -5,10 +5,19 @@
 (require 'init-clojure)
 
 
+(defun joker-fix-file ()
+  (interactive)
+  (message "joker --formt" (buffer-file-name))
+  (shell-command (concat "joker --format --write " (buffer-file-name))))
+
 (defun add-clj-format-before-save ()
   (interactive)
   (add-hook 'before-save-hook
             'cider-format-buffer
+            t
+            t)
+  (add-hook 'before-save-hook
+            'joker-fix-file
             t
             t))
 
