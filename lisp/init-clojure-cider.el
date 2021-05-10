@@ -10,17 +10,6 @@
   (message "joker --formt" (buffer-file-name))
   (shell-command (concat "joker --format --write " (buffer-file-name))))
 
-(defun add-clj-format-before-save ()
-  (interactive)
-  (add-hook 'before-save-hook
-            'cider-format-buffer
-            t
-            t)
-  (add-hook 'before-save-hook
-            'joker-fix-file
-            t
-            t))
-
 (when (maybe-require-package 'cider)
   (setq nrepl-popup-stacktraces nil)
 
@@ -33,6 +22,7 @@
     (with-eval-after-load 'cider
       (with-eval-after-load 'flycheck
         (add-hook 'before-save-hook 'cider-format-buffer)
+        (add-hook 'after-save-hook 'joker-fix-file)
         (dolist (binding '("M-s"))
           (define-key cider-mode-map (read-kbd-macro binding)nil))))))
 
