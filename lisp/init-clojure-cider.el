@@ -6,9 +6,10 @@
 
 
 (defun joker-fix-file ()
-  (interactive)
-  (message "joker --formt" (buffer-file-name))
-  (shell-command (concat "joker --format --write " (buffer-file-name))))
+  (when (eq major-mode 'clojure-mode)
+    (interactive)
+    (message "joker --formt" (buffer-file-name))
+    (shell-command (concat "joker --format --write " (buffer-file-name)))))
 
 (when (maybe-require-package 'cider)
   (setq nrepl-popup-stacktraces nil)
@@ -22,9 +23,10 @@
     (with-eval-after-load 'cider
       (with-eval-after-load 'flycheck
         (add-hook 'before-save-hook 'cider-format-buffer)
+
         (add-hook 'after-save-hook 'joker-fix-file)
         (dolist (binding '("M-s"))
-          (define-key cider-mode-map (read-kbd-macro binding)nil))))))
+                (define-key cider-mode-map (read-kbd-macro binding) nil))))))
 
 
 (provide 'init-clojure-cider)
